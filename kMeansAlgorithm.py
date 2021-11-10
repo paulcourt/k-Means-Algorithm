@@ -142,10 +142,11 @@ while notDone:
 #***************************************************************
 #Print Program Output.
 #***************************************************************
+print('Original Vectors; Distance Matrix; Cluster Index (Repeated twice)
 print('Columns: x1, x2,... xn, d1, d2, .... dn, cluster, temp')
 print(X)
 print('Cluster Size = ', clusterSize)
-print('cluster pts:')
+print('Cluster Vectors:')
 print (cluster)
 
 #***************************************************************
