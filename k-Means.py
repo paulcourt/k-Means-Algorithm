@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
+import seaborn as sns
 
 ##@ Author....Maninder Singh
 #@ modified by Paul Court for SE512 Homework 4 Problem 4 using data for Problem 1.
@@ -54,7 +55,7 @@ def PopulateDistances(cluster, clusterSize, X, cols, k):
     dist = 0
     for j in range (0, cols):
         dist = dist + (cluster[k, j] - X[i, j])**2
-    X[i, k + cols] = dist**(0.5)      
+    X[i, k + cols] = "{:.2f}".format(dist**(0.5) )     
 
 #Keeps a running sum of each cluster for updating the cluster points.
 
@@ -119,13 +120,26 @@ while notDone:
             
     recalculateClusterPoints(cluster, clusterSize, clusterPoint, count, cols)
     
-    print (clusterPoint)
-    print(count)
+    #print (clusterPoint)
+    #print(count)
+    print('Columns: x, y, d1, d2, d3, cluster, temp')
     print(X)
     print('cluster pts:')
     print (cluster)
+    print('More iterations?')
     print(notDone)
 
-#Establishes default values for the random integer and the number of clusters.
-#print('Please enter a value for k, the number of clusters: ', k)
+#Places the six orginal parameters of the vector in an array columns 0 - 5, with 6 beinging the cluster assignment.
+graphData = np.zeros([rows-3, cols + 1])
+for i in range (0, rows-3):
+    for j in range (0, cols):
+        graphData[i, j] = X[i, j]
+        #Fills teh graphData array with the vector values and the cluster index
+        graphData[i, j + 1] = X[i, j + clusterSize + 1] 
+
+df1 = pd.DataFrame(graphData)
+sns.color_palette("mako", as_cmap=True)
+sns.pairplot(df1, hue= 2)
+plt.show()
+
 
