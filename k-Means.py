@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 
 ##@ Author....Maninder Singh
-#@ modified by Paul Court for SE512 Homework 4 Problem 4 using data for Problem 1.
+#@ Modified by Paul Court for SE512 Homework 4 Problem 4 using data for Problem 1.
 
 # read from csv file
 data = r'C:\Users\court\Google Drive\SCSU\SE 512\Assignments\HA 4\problem1.txt'
