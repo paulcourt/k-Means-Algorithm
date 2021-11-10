@@ -39,17 +39,21 @@ notDone = True
 #Creates an augmented array to hold the initial vectors, the distances matrix, the cluster number and a temporary
 #that can check to see if vectors' cluster points change from trial to trial
 #[x1, x2, x3, ... xn, d1, d2, d3,...dn, cluster assignment for this iteration, assignment from last iteration]
+#Also, creates an augmented matrix for the original vector and the cluster assignment.  This is most likely
+#not the most efficient process for doing this....
 
 X = np.zeros([rows, cols + clusterSize + 2])
+graphData = np.zeros([rows, cols + 1])
 
 #Creates two array to hold information on updated cluster points.
 clusterPoint = np.zeros([clusterSize, cols])
 count = np.zeros([clusterSize])
 
-#Copies the original data into the work array X.
+#Copies the original data into the work array X and the graphing array.
 for i in range (0, rows):
     for j in range (0, cols):
         X[i, j] = temp[i, j]
+        graphData[i, j] = temp[i, j]
         
 #***************************************************************
 ##Program Function Definitions.
@@ -131,6 +135,8 @@ while notDone:
         #temporarily storing the cluster assignment into the last column of X.
         if (notDone):
             swapToTemp(X, rows, cols, clusterSize)
+        #Append the cluster index assigned to the graphData
+        graphData[i, cols] = X[i, cols + clusterSize + 1]
     recalculateClusterPoints(cluster, clusterSize, clusterPoint, count, cols)
 
 #***************************************************************
@@ -142,18 +148,11 @@ print('Cluster Size = ', clusterSize)
 print('cluster pts:')
 print (cluster)
 
-#Places the six orginal parameters of the vector in an array columns 0 - 5, with 6 beinging the cluster assignment.
-graphData = np.zeros([rows, cols + 1])
-for i in range (0, rows):
-    for j in range (0, cols):
-        graphData[i, j] = X[i, j]
-        #Fills the graphData array with the vector values and the cluster index
-        graphData[i, j + 1] = X[i, j + clusterSize + 1] 
-
+#***************************************************************
 #Outputs visualiazation graphic.
+#***************************************************************
 df1 = pd.DataFrame(data=graphData)
 sns.color_palette("mako", as_cmap=True)
 sns.pairplot(df1, hue= 6)
 plt.show()
-
 
